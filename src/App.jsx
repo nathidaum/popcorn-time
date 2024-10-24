@@ -1,17 +1,25 @@
 import { useState } from 'react'
+
 import Header from './components/Header'
 import MovieList from './components/MovieList'
 import Footer from './components/Footer'
 
+import movies from "./data/movies.json";
+
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [moviesToDisplay, setMoviesToDisplay] = useState(movies);
+
+  const deleteMovie = (movieId) => {
+    const updatedMovies = moviesToDisplay.filter((movieObj) => movieObj.id !== movieId);
+    setMoviesToDisplay(updatedMovies);
+  };
+
 
   return (
     <>
-    <Header/>
-    <section className="gallery">
-    <MovieList/>
-    </section>
+    <Header numberOfMovies={moviesToDisplay.length}/>
+    <MovieList moviesToDisplay={moviesToDisplay} callBackToDelete={deleteMovie}/>
     <Footer/>
     </>
   )
